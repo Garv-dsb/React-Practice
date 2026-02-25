@@ -7,7 +7,7 @@ const ImagesContainer = ({ query }) => {
   const [loading, setLoading] = useState(false);
 
   // Debouncing
-  const debouncedQuery = useDebounce(query, 5000);
+  const debouncedQuery = useDebounce(query, 1200);
 
   const observerRef = useRef(null);
 
