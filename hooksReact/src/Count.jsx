@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 
+// Function That calculate the Result of upto the 10000000000
+function calculate() {
+  let sum = 0;
+  for (let i = 0; i < 10000000000; i++) {
+    sum += i;
+  }
+  return sum;
+}
+
 const Count = () => {
   const [count, setCount] = useState(0);
-
-  //   this can't run because the setCount work as the
-
-  //   const increaseBy2 = () => {
-  //     setCount(count + 1);
-  //      setCount(count + 1);
-  //   };
-
   const increaseBy2 = () => {
     if (count >= 0) {
       setCount(() => count + 1);
@@ -31,6 +32,9 @@ const Count = () => {
   return (
     <div>
       <p>Current value of the count is : {count}</p>
+
+      {/* it took time to calculate the result of upto the 10000000000 : {calculate()} */}
+      {/* {calculate()} */}
       <button onClick={increaseBy2}>Increase by 2</button>
       <button onClick={decreaseBy2}>Decrease by 2 </button>
     </div>
