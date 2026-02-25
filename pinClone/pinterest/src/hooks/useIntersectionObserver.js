@@ -1,35 +1,27 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-const useIntersectionObserver = (options = {}) => {
+export default function useIntersectionObserver(onIntersect, options = {}) {
   const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
 
+  // observe the current Item
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
+    if (!ref.current) return;
+    const observer = new window.IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
+          onIntersect(entry);
         }
-      },
-      {
-        threshold: 0.7,
-        ...options,
-      },
-    );
+      });
+    }, options);
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(ref.current);
 
+    // return callack function
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      if (ref.current) observer.unobserve(ref.current);
+      observer.disconnect();
     };
-  }, [options]);
+  }, [onIntersect, options]);
 
-  return { ref, isVisible };
-};
-
-export default useIntersectionObserver;
+  return ref;
+}

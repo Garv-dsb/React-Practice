@@ -22,7 +22,6 @@ const Home = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </nav>
-
       <ImagesContainer query={searchTerm} />
     </div>
   );
