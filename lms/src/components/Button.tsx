@@ -1,17 +1,16 @@
-import React from "react";
-
 interface ButtonProps {
   title: string;
   clickHanler?: () => void;
+  loading?: boolean;
 }
 
-const Button = ({ title, clickHanler }: ButtonProps) => {
+const Button = ({ title, clickHanler, loading }: ButtonProps) => {
   return (
     <button
       onClick={clickHanler}
-      className="p-2 w-full bg-black/50 text-white rounded-lg hover:cursor-pointer"
+      className={`p-3 w-full bg-[#9A92AE] text-white rounded-lg hover:from-indigo-600 hover:to-indigo-700  font-semibold transition-all duration-200 shadow-md hover:shadow-lg  text-sm ${loading ? "cursor-not-allowed" : "hover:cursor-pointer"}`}
     >
-      {title}
+      {loading ? "Wait..." : title}
     </button>
   );
 };

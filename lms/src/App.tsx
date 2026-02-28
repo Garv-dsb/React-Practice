@@ -9,6 +9,7 @@ const App = () => {
     <div className="w-screen h-screen">
       <Routes>
         <Route path="/login" element={<Login />} />
+
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Layout />}></Route>
         </Route>
