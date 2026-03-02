@@ -18,6 +18,9 @@ export const useLoginStore = create<loginStoreState>((set) => ({
       );
 
       set({ userLoginData: response.data, loading: false });
+      localStorage.setItem("userName", response.data?.firstName);
+      localStorage.setItem("token", response.data?.accessToken);
+      return response;
     } catch (error) {
       console.log("Error from the Login Store", error);
     }

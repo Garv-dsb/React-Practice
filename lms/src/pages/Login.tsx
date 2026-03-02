@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schema/loginSchema";
 import { useLoginStore } from "../store/loginStore";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface InputForm {
   username: string;
@@ -12,7 +13,7 @@ interface InputForm {
 }
 
 const Login = () => {
-  const { loading, userLoginData, submitUser } = useLoginStore();
+  const { loading, submitUser } = useLoginStore();
   const navigate = useNavigate();
 
   const {
@@ -23,19 +24,16 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<InputForm> = (data) => {
-    submitUser(data.username, data.password);
+  const onSubmit: SubmitHandler<InputForm> = async (data) => {
+    const res = await submitUser(data.username, data.password);
 
     // if the token is accessible then save it to the localstorage
-    if (userLoginData) {
-      localStorage.setItem("userName", userLoginData?.firstName);
+    if (res?.data) {
+      navigate("/");
+      toast.success("Login Successfully");
+    } else {
+      toast.error("An Error occurred!");
     }
-
-    if (userLoginData?.accessToken) {
-      localStorage.setItem("token", userLoginData.accessToken);
-    }
-
-    navigate("/");
   };
 
   return (
@@ -74,6 +72,7 @@ const Login = () => {
             name="username"
             register={register}
             errors={errors?.username}
+            isError={true}
           />
 
           <Input
@@ -84,6 +83,7 @@ const Login = () => {
             name="password"
             register={register}
             errors={errors?.password}
+            isError={true}
           />
 
           <Button title="submit" loading={loading} />
