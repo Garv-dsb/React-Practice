@@ -1,7 +1,6 @@
-import React from "react";
 import Button from "../../components/Button";
 import { useLibraryStore } from "../../store/libraryStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Library = () => {
   const { booksData } = useLibraryStore();
@@ -9,6 +8,12 @@ const Library = () => {
 
   const redirectToAdd = () => {
     navigate("/add");
+  };
+
+  const { id } = useParams();
+
+  const navigateToBookView = (id: number) => {
+    navigate(`/${id}`);
   };
 
   return (
@@ -39,6 +44,9 @@ const Library = () => {
               <th scope="col" className="px-6 py-3 font-medium text-[#9A92AE]">
                 Availablity
               </th>
+              <th scope="col" className="px-6 py-3 font-medium text-[#9A92AE]">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -62,6 +70,12 @@ const Library = () => {
                     className={`px-6 py-4 ${book.available === "NO" ? "bg-red-100 font-bold" : ""}`}
                   >
                     {book.available}
+                  </td>
+                  <td className="px-6 py-4">
+                    <Button
+                      title="view"
+                      clickHanler={() => navigateToBookView(book.id)}
+                    />
                   </td>
                 </tr>
               );
