@@ -1,19 +1,24 @@
 import Button from "../../components/Button";
 import { useLibraryStore } from "../../store/libraryStore";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Library = () => {
   const { booksData } = useLibraryStore();
   const navigate = useNavigate();
+  const { notassignedToUser } = useLibraryStore();
 
+  // redirect to add
   const redirectToAdd = () => {
     navigate("/add");
   };
 
-  const { id } = useParams();
-
+  // redirect to Single View
   const navigateToBookView = (id: number) => {
-    navigate(`/${id}`);
+    navigate(`/library/${id}`);
+  };
+
+  const removeBookAssign = (id: number) => {
+    notassignedToUser(id);
   };
 
   return (
@@ -44,7 +49,11 @@ const Library = () => {
               <th scope="col" className="px-6 py-3 font-medium text-[#9A92AE]">
                 Availablity
               </th>
-              <th scope="col" className="px-6 py-3 font-medium text-[#9A92AE]">
+              <th
+                scope="col"
+                colSpan={2}
+                className="px-6 py-3 text-center  font-medium text-[#9A92AE]"
+              >
                 Actions
               </th>
             </tr>
@@ -71,11 +80,18 @@ const Library = () => {
                   >
                     {book.available}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 space-x-2 text-center">
                     <Button
                       title="view"
                       clickHanler={() => navigateToBookView(book.id)}
                     />
+                    {book.status === true && (
+                      <Button
+                        title="Not Assign"
+                        isNotAssign={true}
+                        clickHanler={() => removeBookAssign(book.id)}
+                      />
+                    )}
                   </td>
                 </tr>
               );

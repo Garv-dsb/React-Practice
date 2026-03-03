@@ -10,10 +10,12 @@ const NotFound = () => {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center rounded-lg ">
-      <div className="border-1 p-[20px] flex flex-col gap-[10px] ">
-        <p className="font-bold ">404 Not Found</p>
-        <Button title="Go to Home" clickHanler={GoToHome} />
+    <div className="w-full h-full flex justify-center items-center ">
+      <div className="border-1 p-[30px] flex flex-col gap-[10px] rounded-lg">
+        <p className="font-bold text-2xl">404 Not Found</p>
+        <div className="text-center">
+          <Button title="Go to Home" clickHanler={GoToHome} />
+        </div>
       </div>
     </div>
   );

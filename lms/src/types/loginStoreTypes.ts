@@ -1,3 +1,5 @@
+import type { AxiosResponse } from "axios";
+
 // user Type that will return the APi
 export interface userLoginData {
   id: number;
@@ -15,5 +17,8 @@ export interface userLoginData {
 export interface loginStoreState {
   userLoginData: userLoginData | null;
   loading: boolean;
-  submitUser: (username?: string, password?: string) => Promise<void>;
+  submitUser: (
+    username?: string,
+    password?: string,
+  ) => Promise<AxiosResponse<userLoginData> | undefined>;
 }

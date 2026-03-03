@@ -17,4 +17,5 @@ export interface libraryStore {
   userData: userData[];
   loading: boolean;
   assignedBookToUser: (id?: number, assignedTo?: string) => void;
+  notassignedToUser : (id?: number) => void;
 }

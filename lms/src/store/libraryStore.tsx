@@ -106,4 +106,26 @@ export const useLibraryStore = create<libraryStore>((set, get) => ({
       console.log("Error during assigning Book to the user", error);
     }
   },
+
+  notassignedToUser: (id?: number) => {
+    set({ loading: true });
+
+    try {
+      const tempBooksData = get().booksData;
+      const updatedBooksData = tempBooksData.map((book) => {
+        if (book.id === id) {
+          return [
+            ...tempBooksData,
+            (book.assignedTo = ""),
+            (book.status = false),
+            (book.available = "Yes"),
+          ];
+        }
+      });
+      set({ loading: false });
+      return updatedBooksData;
+    } catch (error) {
+      console.log("Error during assigning Book to the user", error);
+    }
+  },
 }));
