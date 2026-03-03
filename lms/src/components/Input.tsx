@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { UseFormRegister, FieldError } from "react-hook-form";
+import type { UseFormRegister, FieldError, FieldValues } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface InputForm {
@@ -9,12 +9,12 @@ interface InputForm {
   status: boolean;
 }
 
-interface InputProps {
+interface InputProps<T extends FieldValues> {
   type: string;
   htmlFor: string;
   id: string;
   name: keyof InputForm;
-  register: UseFormRegister<InputForm>;
+  register: UseFormRegister<T>;
   errors?: FieldError;
   label: string;
   defaultValue?: string;
@@ -22,7 +22,7 @@ interface InputProps {
   isError?: boolean;
 }
 
-const Input = ({
+const Input = <T extends FieldValues>({
   type,
   htmlFor,
   id,
@@ -33,7 +33,7 @@ const Input = ({
   label,
   defaultValue,
   isDisabled,
-}: InputProps) => {
+}: InputProps<T>) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
